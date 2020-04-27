@@ -1,0 +1,108 @@
+/**
+* ─────────────────────────────────────────────────────────────────────────────────────────────────┐
+* Apex trigger that will be invoked after case insert and update. You can change the trigger 
+* actions as desired, but you may need to modify the logic.
+* 
+* **** Minimally you must update the TRIGGER CONFIGURATION section ****
+* 
+* Apex Class Dependencies:
+* - xMattersReq.apxc
+*
+* ──────────────────────────────────────────────────────────────────────────────────────────────────
+* @author         Eric Maxwell      <emaxwell@xmatters.com>
+* @modifiedBy     
+* @maintainedBy   
+* @version        0.1
+* @created        2020-04-27
+* @modified       2020-04-27
+* ──────────────────────────────────────────────────────────────────────────────────────────────────
+* @changes
+* v0.1            emaxwell@xmatters.com
+* 2020-04-27      Reused from an older xMatters Salesforce integration.
+* ─────────────────────────────────────────────────────────────────────────────────────────────────┘
+*/
+
+trigger xMattersCaseAlert on Case (after insert, after update) {
+    /**
+     * TRIGGER CONFIGURATION
+     *
+     * Must at the very least configure the Named Credentials and xMatters HTTP Trigger URL.
+     */
+
+    //[SET TO YOUR NAMED CREDENTIALS] 
+    //Salesforce Named Credentials for xMatters instance
+    String sfNamedCreds = 'xMatters';
+
+    //[CHANGE TO YOUR XMATTERS TRIGGER] 
+    //The xMatters HTTP Trigger path excluding the protocol and domain
+    String xmTriggerPath = 'api/integration/1/functions/a1b2c3d4-a1b2-a1b2-a1b2-a1b2c3d4e5f6/triggers';
+    
+    //Comma separated list of the Salesforce User fields to include when getting 
+    //related case users (owner, creator, modifier) information. Can be custom fields, but
+    //must be valid User sObject fields.
+    String sfUserFields = 'id, username, lastname, firstname, name, companyname, email, alias, communitynickname, isactive';
+
+
+
+    /**
+     * TRIGGER LOGIC
+     * 
+     * Modify the following if needed to customize for your use case.
+     */
+
+
+    //Create xMatters trigger endpoint
+    String endpoint = 'callout:' + sfNamedCreds + '/' + xmTriggerPath;
+
+    //Build base user query
+    String userQuery = 'Select ' + sfUserFields + ' From User Where Id =\'';
+    
+    //Serialize case object into JSON format
+    String newCase = JSON.serialize(Trigger.New[0]);
+
+    //Query for case owner information
+    String owner = '{}';
+    try {
+        owner = JSON.serialize(database.query(userQuery + Trigger.New[0].OwnerId + '\'')[0]);
+    } catch (QueryException e) {
+        owner = '{}';
+    }
+
+    //Query for case creator information
+    String creator = '{}';
+    try {
+        creator = JSON.serialize(database.query(userQuery + Trigger.New[0].CreatedById + '\'')[0]);
+    } catch (QueryException e) {
+        creator = '{}';
+    }
+
+    //Query for case modifier information
+    String modifier = '{}';
+    try {
+        modifier = JSON.serialize(database.query(userQuery + Trigger.New[0].LastModifiedById + '\'')[0]);
+    } catch (QueryException e) {
+        modifier = '{}';
+    }
+
+    //Get related Account information if available
+    String accountid = Trigger.New[0].AccountID;
+    if (accountid != null) {
+        String account = JSON.serialize([Select Name From Account Where Id = :accountid][0]);
+    } else {
+        String account = '{}';
+    }
+
+    //Set reason property
+    String reason = '';
+    if (Trigger.isInsert) {
+        reason = 'case created';
+    } else if (Trigger.isUpdate) {
+        reason = 'case updated';
+    } else {
+        reason = 'unknown';
+    }
+
+    //Create payload and send
+    String payload = '{"reason": "' + reason + '", "case": ' + newCase + ',"account": ' + account + ',"owner": ' + owner + ',"creator": ' + creator + ',"modifier": ' + modifier + '}';
+    xMattersReq.xRESTCall(endpoint, payload);
+}

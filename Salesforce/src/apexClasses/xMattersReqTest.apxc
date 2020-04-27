@@ -1,0 +1,27 @@
+@isTest
+private class xMattersTest {
+
+    static testMethod void SubmitCaseNoAccount() {
+        Case ca = new Case (Subject='Test xMatters Integration');
+            ca.Status = 'New';
+        	ca.Origin = 'Phone';
+        	ca.Description = 'Hello, This is A Test';
+        Test.setMock(HttpCalloutMock.class, new xMattersHttpCallOutmock());
+        insert ca;
+    }
+
+     static testMethod void SubmitCaseAccount() {
+        Account ac = new Account (Name='xMatters Test');
+        insert ac;
+         
+        ID acctID = ac.ID;
+         
+        Case ca = new Case (Subject='Test xMatters Integration');
+            ca.Status = 'New';
+        	ca.Origin = 'Phone';
+         	ca.AccountID = acctID;
+    	    ca.Description = 'Hello, This is A Test';
+        Test.setMock(HttpCalloutMock.class, new xMattersHttpCallOutmock());
+        insert ca;
+    }
+}

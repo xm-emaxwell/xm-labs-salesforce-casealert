@@ -1,0 +1,12 @@
+@isTest
+global class xMattersHttpCalloutMock implements HttpCalloutMock {
+    // Implement this interface method
+    global HTTPResponse respond(HTTPRequest request) {
+        // Create a fake response
+        HttpResponse response = new HttpResponse();
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody('{"requestId": "xMatters_Integration_Builder_Response"}');
+        response.setStatusCode(202);
+        return response; 
+    }
+}
