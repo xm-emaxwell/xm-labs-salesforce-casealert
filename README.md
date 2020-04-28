@@ -37,7 +37,7 @@ When a Salesforce case is either created or modified it will invoke the Apex Tri
 
 The example workflow only adds a comment back to the case, but that is just to show that it worked and that your xMatters flow can also connect back to Salesforce. You can add whatever steps you like after the initial trigger like sending an xMatters notification, posting to a Slack channel, MS Teams channel, or based on case information create a related Jira issue.  Or whatever you need it to do.
 
-- WARNING - 
+## :red_circle: WARNING 
 If you are going to use an xMatters step that updates a Salesforce case in this xMatters flow then you must modify the Apex Trigger configuration or logic. It will create an infinite loop if you do not. Luckily if you leave xMatters settings as default it should detect a flood, but it can still take a few seconds. <span style="color:green">Adding a case comment is not considered a case update.</span>  There is another warning in the Installation steps with instructions on how to update the trigger. If you forget the fastest action is to disable the workflow until you fix it.
 
 ---
