@@ -38,32 +38,32 @@ When a Salesforce case is either created or modified it will invoke the Apex Tri
 2. Under this integration user create a new API key to use with Salesforce. *Make sure to note the key and secret for later when we configure Saleforce.* [Instructions](https://help.xmatters.com/ondemand/user/apikeys.htm)
 
     <kbd>
-        <img src="media/xm-api-key.png" width="600">
+        <img src="media/xm-api-key.png" width="700">
     </kbd>
 
 3. Import the example workflow. [Instructions](https://help.xmatters.com/ondemand/xmodwelcome/workflows/manage-workflows.htm)
 
     <kbd>
-        <img src="media/xm-import-workflow.png" width="600">
+        <img src="media/xm-import-workflow.png" width="700">
     </kbd>
 
 4.  Modify the **Case Alert** form in the imported workflow and give the integration user sender permissions on the form. [Instructions](https://help.xmatters.com/ondemand/xmodwelcome/communicationplanbuilder/formpermissions.htm)
 
     <kbd>
-        <img src="media/xm-sender-permissions.png" width="600">
+        <img src="media/xm-sender-permissions.png" width="700">
     </kbd>
 
 5. Now open the corresponding flow **Case Alert** and you will see one trigger on the canvas called **Salesforce - Case Alert**
 6. Hover over the trigger step and select edit.
 
     <kbd>
-        <img src="media/xm-edit-trigger.png" width="600">
+        <img src="media/xm-edit-trigger.png" width="700">
     </kbd>
 
 7. On the Settings tab copy the trigger's URL and paste it in your notes for later.
 
     <kbd>
-        <img src="media/xm-edit-trigger2.png" width="600">
+        <img src="media/xm-edit-trigger2.png" width="700">
     </kbd>
 
 If you are using the imported example workflow you will also need to configure the endpoint used by the built-in Add Comment step for your Salesforce instance.
@@ -87,7 +87,7 @@ This is not intended to be a comprehensive guide on setting up and deploying Sal
     * **Allow Merge Fields in HTTP Body** = enabled
 
     <kbd>
-        <img src="media/sf-namedcredential.png" width="600">
+        <img src="media/sf-namedcredential.png" width="700">
     </kbd>
 
 2. Open the Salesforce Developer Console to create the following resources
