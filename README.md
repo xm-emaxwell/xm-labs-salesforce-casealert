@@ -31,6 +31,14 @@ This integration can also be used as an example to building other integrations f
 ## How It Works
 When a Salesforce case is either created or modified it will invoke the Apex Trigger which will gather the case, account, creator, owner, and modifier information.  It will then send that to the xMattersReq class to send the payload to the configured xMatters HTTP Trigger endpoint.  The xMatters HTTP Trigger will process the payload to outputs to be utilized by other flow steps.
 
+<kbd>
+    <img src="media/Salesforce - Case Alert.png" width="700">
+</kbd>
+
+The example workflow only adds a comment back to the case, but that is just to show that it worked and that your xMatters flow can also connect back to Salesforce. You can add whatever steps you like after the initial trigger like sending an xMatters notification, posting to a Slack channel, MS Teams channel, or based on case information create a related Jira issue.  Or whatever you need it to do.
+
+<span style="color:red"><strong>WARNING:</strong></span> If you are going to use an xMatters step that updates a Salesforce case in this xMatters flow then you must modify the Apex Trigger configuration or logic. It will create an infinite loop if you do not. Luckily if you leave xMatters settings as default it should detect a flood, but it can still take a few seconds. <span style="color:green">Adding a case comment is not considered a case update.</span>  There is another warning in the Installation steps with instructions on how to update the trigger. If you forget the fastest action is to disable the workflow until you fix it.
+
 ---
 ## Installation
 ### xMatters Setup
@@ -123,6 +131,14 @@ This is not intended to be a comprehensive guide on setting up and deploying Sal
         //related case users (owner, creator, modifier) information. Can be custom fields, but
         //must be valid User sObject fields.
         String sfUserFields = 'id, username, lastname, firstname, name, companyname, email, alias, communitynickname, isactive';
+        ```
+    * <span style="color:red"><strong>WARNING:</strong></span> If you are going to use an xMatters step that updates a Salesforce case in this xMatters flow then you must remove the "after update" action from the Apex Trigger or update the Apex Trigger logic. It will create an infinite loop if you do not. Luckily if you leave xMatters settings as default it should detect a flood, but it can still take a few seconds. <span style="color:green">Adding a case comment is not considered a case update.</span> If you forget the fastest action is to disable the xMatters workflow until you fix it. You can remove the update action and only trigger on case creation by changing this
+        ```java
+        trigger xMattersCaseAlert on Case (after insert, after update) {
+        ```
+        to this
+        ```java
+        trigger xMattersCaseAlert on Case (after insert) {
         ```
 4. Create a new Apex Class (xMattersReq)
     * **Name** = xMattersReq
