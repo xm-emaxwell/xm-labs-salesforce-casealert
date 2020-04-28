@@ -36,16 +36,35 @@ When a Salesforce case is either created or modified it will invoke the Apex Tri
 ### xMatters Setup
 1.  If you do not already have an xMatters user specifically for integrations it is recommended to create one.  This account should only be used for integrations. You can create the API key under any user account.
 2. Under this integration user create a new API key to use with Salesforce. *Make sure to note the key and secret for later when we configure Saleforce.* [Instructions](https://help.xmatters.com/ondemand/user/apikeys.htm)
-![xMatters API key](media/xm-api-key.png)
+
+    <kbd>
+        <img src="media/xm-api-key.png" width="600">
+    </kbd>
+
 3. Import the example workflow. [Instructions](https://help.xmatters.com/ondemand/xmodwelcome/workflows/manage-workflows.htm)
-![xMatters Import Workflow](media/xm-import-workflow.png)
+
+    <kbd>
+        <img src="media/xm-import-workflow.png" width="600">
+    </kbd>
+
 4.  Modify the **Case Alert** form in the imported workflow and give the integration user sender permissions on the form. [Instructions](https://help.xmatters.com/ondemand/xmodwelcome/communicationplanbuilder/formpermissions.htm)
-![xMatters Form Sender Permissions](media/xm-sender-permissions.png)
+
+    <kbd>
+        <img src="media/xm-sender-permissions.png" width="600">
+    </kbd>
+
 5. Now open the corresponding flow **Case Alert** and you will see one trigger on the canvas called **Salesforce - Case Alert**
 6. Hover over the trigger step and select edit.
-![xMatters Edit Trigger](media/xm-edit-trigger.png)
+
+    <kbd>
+        <img src="media/xm-edit-trigger.png" width="600">
+    </kbd>
+
 7. On the Settings tab copy the trigger's URL and paste it in your notes for later.
-![xMatters Copy Trigger URL](media/xm-edit-trigger2.png)
+
+    <kbd>
+        <img src="media/xm-edit-trigger2.png" width="600">
+    </kbd>
 
 If you are using the imported example workflow you will also need to configure the endpoint used by the built-in Add Comment step for your Salesforce instance.
 
@@ -67,10 +86,16 @@ This is not intended to be a comprehensive guide on setting up and deploying Sal
     * **Allow Merge Fields in HTTP Header** = enabled
     * **Allow Merge Fields in HTTP Body** = enabled
 
-    ![Salesforce Named Credential](media/sf-namedcredential.png)
+    <kbd>
+        <img src="media/sf-namedcredential.png" width="600">
+    </kbd>
+
 2. Open the Salesforce Developer Console to create the following resources
 
-    ![Salesforce Developer Console](media/sf-devconsole.png)
+    <kbd>
+        <img src="media/sf-devconsole.png">
+    </kbd>
+
 3. Create a new Apex Trigger (xMattersCaseAlert)
     * **Name** = xMattersCaseAlert
     * **sObject** = Case
