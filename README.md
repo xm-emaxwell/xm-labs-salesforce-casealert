@@ -27,7 +27,7 @@ This integration can also be used as an example to building other integrations f
     * [xMattersCaseAlert.apxt](Salesforce/src/apexTriggers/xMattersCaseAlert.apxt) - Apex trigger on case insert and update
 * xMatters
     * [SalesforceCaseAlert.js](xMatters/src/xmTriggers/SalesforceCaseAlert.js) - xMatters HTTP Trigger source code
-    * [SalesforceCaseAlert.zip](SalesforceCaseAlert.zip) - example workflow
+    * [SalesforceCaseAlert.zip](xMatters/workflows/SalesforceCaseAlert.zip) - example workflow
 
 
 ## How It Works
