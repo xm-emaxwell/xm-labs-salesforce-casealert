@@ -1,8 +1,8 @@
 /**
- * xMatters HTTP Trigger that will take input from the provided Salesforce Apex Trigger
+ * Example xMatters HTTP Trigger that will take input from the provided Salesforce Apex Trigger
  * (xMattersCaseAlert.apxt) and parse information to corresponding xMatters Trigger outputs.
  * 
- * @author: emaxwell@xmatters.com
+ * @author: xMatters
  * @version: 0.1
  * 
  * If you modify or use as an example to create your own xMatters HTTP Trigger be sure to 
@@ -41,7 +41,6 @@ if (payload.case != undefined){
     output['caseCreated'] = payload.case.CreatedDate;
     output['modifierId'] = payload.case.LastModifiedById;
     output['caseModified'] = payload.case.LastModifiedDate;
-    output['accountId'] = payload.case.AccountId;
 } else {
     throw 'No case information in payload';
     /*
@@ -77,6 +76,7 @@ if (payload.case != undefined){
 
 //Extract Salesforce account information
 if (payload.case.AccountId !== undefined) {
+    output['accountId'] = payload.case.AccountId;
     if (payload.account !== undefined){
         output['accountName'] = payload.account.Name;
     } else {

@@ -9,7 +9,7 @@
 * - xMattersReq.apxc
 *
 * ──────────────────────────────────────────────────────────────────────────────────────────────────
-* @author         Eric Maxwell      <emaxwell@xmatters.com>
+* @author         xMatters      <www.xmatters.com>
 * @modifiedBy     
 * @maintainedBy   
 * @version        0.1
@@ -17,8 +17,8 @@
 * @modified       2020-04-27
 * ──────────────────────────────────────────────────────────────────────────────────────────────────
 * @changes
-* v0.1            emaxwell@xmatters.com
-* 2020-04-27      Reused from an older xMatters Salesforce integration.
+* v0.1            
+* 2020-04-27      Initial version
 * ─────────────────────────────────────────────────────────────────────────────────────────────────┘
 */
 
@@ -34,7 +34,7 @@ trigger xMattersCaseAlert on Case (after insert, after update) {
     String sfNamedCreds = 'xMatters';
 
     //[CHANGE TO YOUR XMATTERS TRIGGER] 
-    //The xMatters HTTP Trigger path excluding the protocol and domain
+    //The xMatters HTTP Trigger path excluding the protocol,domain,and first slash
     String xmTriggerPath = 'api/integration/1/functions/a1b2c3d4-a1b2-a1b2-a1b2-a1b2c3d4e5f6/triggers';
     
     //Comma separated list of the Salesforce User fields to include when getting 
@@ -86,10 +86,11 @@ trigger xMattersCaseAlert on Case (after insert, after update) {
 
     //Get related Account information if available
     String accountid = Trigger.New[0].AccountID;
+    String account = '{}';
     if (accountid != null) {
-        String account = JSON.serialize([Select Name From Account Where Id = :accountid][0]);
+        account = JSON.serialize([Select Name From Account Where Id = :accountid][0]);
     } else {
-        String account = '{}';
+        account = '{}';
     }
 
     //Set reason property

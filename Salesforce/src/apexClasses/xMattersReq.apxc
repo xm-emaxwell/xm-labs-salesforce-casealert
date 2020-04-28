@@ -5,7 +5,7 @@
 * Payload should be JSON formatted.  The actual payload properties depend on the Apex Trigger and
 * and what the xMatters HTTP Trigger is expecting.
 * ──────────────────────────────────────────────────────────────────────────────────────────────────
-* @author         Eric Maxwell      <emaxwell@xmatters.com>
+* @author         xMatters      <www.xmatters.com>
 * @modifiedBy     
 * @maintainedBy   
 * @version        0.1
@@ -13,7 +13,7 @@
 * @modified       2020-04-27
 * ──────────────────────────────────────────────────────────────────────────────────────────────────
 * @changes
-* v0.1            emaxwell@xmatters.com
+* v0.1            
 * 2020-04-27      Reused from an older xMatters Salesforce integration.
 * ─────────────────────────────────────────────────────────────────────────────────────────────────┘
 */
