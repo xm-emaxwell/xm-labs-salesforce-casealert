@@ -7,9 +7,8 @@ This integration can also be used as an example to building other integrations f
 
 [![Disclamer](https://raw.githubusercontent.com/xmatters/xMatters-Labs/master/media/disclaimer.png)](https://support.xmatters.com/hc/en-us/community/topics)
 
-
-## Pre-Requisites
 ---
+## Pre-Requisites
 * Salesforce
     * Permission to create/deploy **Apex Classes** and **Apex Triggers**
     * Permission to create **Named Credentials**
@@ -17,9 +16,8 @@ This integration can also be used as an example to building other integrations f
     * Account - if you don't have one [get one](https://www.xmatters.com) for free
     * Permissions to create/edit Workflows
 
-
-## Files
 ---
+## Files
 * Salesforce
     * [xMattersReq.apxc](Salesforce/src/apexClasses/xMattersReq.apxc) - Apex class for sending HTTP request to xMatters
     * [xMattersReqTest.apxc](Salesforce/src/apexClasses/xMattersReqTest.apxc) - basic Apex test class for code coverage
@@ -29,14 +27,12 @@ This integration can also be used as an example to building other integrations f
     * [SalesforceCaseAlert.js](xMatters/src/xmTriggers/SalesforceCaseAlert.js) - xMatters HTTP Trigger source code
     * [SalesforceCaseAlert.zip](xMatters/workflows/SalesforceCaseAlert.zip) - example workflow
 
-
-## How It Works
 ---
+## How It Works
 When a Salesforce case is either created or modified it will invoke the Apex Trigger which will gather the case, account, creator, owner, and modifier information.  It will then send that to the xMattersReq class to send the payload to the configured xMatters HTTP Trigger endpoint.  The xMatters HTTP Trigger will process the payload to outputs to be utilized by other flow steps.
 
-
-## Installation
 ---
+## Installation
 ### xMatters Setup
 1.  If you do not already have an xMatters user specifically for integrations it is recommended to create one.  This account should only be used for integrations. You can create the API key under any user account.
 2. Under this integration user create a new API key to use with Salesforce. *Make sure to note the key and secret for later when we configure Saleforce.* [Instructions](https://help.xmatters.com/ondemand/user/apikeys.htm)
@@ -114,9 +110,8 @@ This is not intended to be a comprehensive guide on setting up and deploying Sal
     * Paste in the code from [xMattersHttpCalloutMock.apxc](Salesforce/src/apexClasses/xMattersHttpCalloutMock.apxc)
 7. This should work on Sandbox/Developer instances. To move to production Salesforce systems you will need to follow Salesforce deployment guidelines.
 
-
-## Testing
 ---
+## Testing
 1. Create or modify a case in Salesforce
 2. In xMatters the new HTTP Trigger should be fired and any following steps executed.
     * If using the imported workflow and the comment step is configured the case should have a comment added.
@@ -213,9 +208,8 @@ This is not intended to be a comprehensive guide on setting up and deploying Sal
     }
     ```
 
-
-## Troubleshooting
 ---
+## Troubleshooting
 ### xMatters Not Recieving Trigger
 * Verify the xMatters workflow is enabled
 * Does the xMatters user that owns the API key have send permissions on the flow form?
