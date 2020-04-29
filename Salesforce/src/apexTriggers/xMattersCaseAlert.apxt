@@ -22,7 +22,7 @@
 * ─────────────────────────────────────────────────────────────────────────────────────────────────┘
 */
 
-trigger xMattersCaseAlert on Case (after insert, after update) {
+trigger xMattersCaseAlert on Case (after insert) {
     /**
      * TRIGGER CONFIGURATION
      *

@@ -1,5 +1,5 @@
 # Salesforce - Case Alert
-This is a one-way integration with Salesforce that will trigger an xMatters flow when a case is created or updated. It can be used along with the builtin xMatters Salesforce steps to create a closed-loop integration.
+This is a one-way integration with Salesforce that will trigger an xMatters flow when a case is created. It can be used along with the builtin xMatters Salesforce steps to create a closed-loop integration.
 
 Salesforce will send the xMatters flow the case information along with getting details for the associated Salesforce account, case creator, case owner, and case modifier.  It can also be modified to process Salesforce sObject custom fields.
 
@@ -38,9 +38,7 @@ When a Salesforce case is either created or modified it will invoke the Apex Tri
 The example workflow only adds a comment back to the case, but that is just to show that it worked and that your xMatters flow can also connect back to Salesforce. You can add whatever steps you like after the initial trigger like sending an xMatters notification, posting to a Slack channel, MS Teams channel, or based on case information create a related Jira issue.  Or whatever you need it to do.
 
 ### :red_circle: WARNING 
-If you are going to use an xMatters step that updates a Salesforce case in this xMatters flow then you must modify the Apex Trigger configuration or logic. It will create an infinite loop if you do not. Luckily if you leave xMatters settings as default it should detect a flood, but it can still take a few seconds. There is another warning in the Installation steps with instructions on how to update the trigger. If you forget the fastest action is to disable the workflow until you fix it.
-
-**Adding a case comment is not considered a case update.**
+If you modify the Apex Trigger to invoke on case update and also use a step in your xMatters flow that updates the case you can create an infinite loop. You must update the Apex Trigger logic for your use case so that it does not trigger on every update.  Maybe only trigger if the status is changed to Escalate or something. Salesforce does NOT consider adding comments to a case as a case update, so you can add comments with out creating a loop in this scenario. Luckily if you leave xMatters settings as default it should detect a flood, but it can still take a few seconds. There is another warning in the Installation steps with instructions on how to modify the Apex Trigger to invoke on case update. If you forget and create a loop the fastest action is to disable the workflow until you fix it.
 
 ---
 ## Installation
@@ -136,17 +134,19 @@ This is not intended to be a comprehensive guide on setting up and deploying Sal
         String sfUserFields = 'id, username, lastname, firstname, name, companyname, email, alias, communitynickname, isactive';
         ```
     ### :red_circle: WARNING 
-    If you are going to use an xMatters step that updates a Salesforce case in this xMatters flow then you must remove the "after update" action from the Apex Trigger or update the Apex Trigger logic. It will create an infinite loop if you do not. Luckily if you leave xMatters settings as default it should detect a flood, but it can still take a few seconds. <span style="color:green"></span> If you forget the fastest action is to disable the xMatters workflow until you fix it.
+    You can modify the Apex Trigger to invoke on case update as well, but if you are using an xMatters step that updates a Salesforce case then you must modify the Apex Trigger logic to only notify xMatters on something like status changed to Escalate or whatever you need for your scenario. It will create an infinite loop if you do not. Luckily if you leave xMatters settings as default it should detect a flood, but it can still take a few seconds. If you forget the fastest action is to disable the xMatters workflow until you fix it.
 
-    **Adding a case comment is not considered a case update.**
+    **Adding a case comment is NOT considered a case update.**
     
-    You can remove the update action and only trigger on case creation by changing this
+    To enable the Apex Trigger to invoke on case update do one of the following.
+    
+    Invoke on case creation and update
     ```java
     trigger xMattersCaseAlert on Case (after insert, after update) {
     ```
-    to this
+    or Invoke only on case update
     ```java
-    trigger xMattersCaseAlert on Case (after insert) {
+    trigger xMattersCaseAlert on Case (after update) {
     ```
 4. Create a new Apex Class (xMattersReq)
     * **Name** = xMattersReq
