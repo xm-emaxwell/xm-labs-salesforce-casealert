@@ -1,9 +1,7 @@
 # Salesforce - Case Alert
-This is a one-way integration with Salesforce that will trigger an xMatters flow when a case is created. It can be used along with the builtin xMatters Salesforce steps to create a closed-loop integration.
+This is a one-way integration with Salesforce that will trigger an xMatters flow when a case is created. It can be used along with the builtin xMatters Salesforce steps to create a closed-loop integration.  **It can also be modifed to send on case update, but please read the warnings.**
 
-Salesforce will send the xMatters flow the case information along with getting details for the associated Salesforce account, case creator, case owner, and case modifier.  It can also be modified to process Salesforce sObject custom fields.
-
-This integration can also be used as an example to building other integrations from triggers on other actions or sObjects in Salesforce.
+Salesforce will send the xMatters flow the case information along with details for the associated Salesforce account, case creator, case owner, and case modifier. The xMatters HTTP Trigger can also be modified to process Salesforce sObject custom fields.
 
 [![Disclamer](https://raw.githubusercontent.com/xmatters/xMatters-Labs/master/media/disclaimer.png)](https://support.xmatters.com/hc/en-us/community/topics)
 
